@@ -4,7 +4,7 @@ App to visualize the price from coinmarketcap.com and other custom statistics of
 
 - [Here the app live](https://carlescg.shinyapps.io/crypto/)
 
-![](https://github.com/carlescg/Crypto_Portfolio_App/blob/master/cover.png) 
+![](https://github.com/CarlesCG/Crypto_Portfolio_App/raw/master/www/cover.png) 
 
 ### Features  
 - Query the information on the fly
