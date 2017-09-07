@@ -5,7 +5,7 @@ library(plotly)
 
 source("./global.R")
 
-ui <- dashboardPage(
+ui <- dashboardPage(skin = "black",
    dashboardHeader(title = "Crypto Portfolio"),
    dashboardSidebar(
       sidebarMenu(
