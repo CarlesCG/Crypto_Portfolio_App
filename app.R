@@ -31,7 +31,8 @@ ui <- dashboardPage(skin = "black",
                           start = Sys.Date() - 30*2, end = Sys.Date()-1,
                           max = Sys.Date(),
                           separator = " - ", format = "dd/mm/yy",
-                          startview = 'day')), 
+                          startview = 'day') 
+                       ),
                     actionButton("run.query", HTML("<i class='glyphicon glyphicon-send'></i> Run")), 
                     br(), br(), bookmarkButton(),  
                     verbatimTextOutput("dateRangeText2")
@@ -58,7 +59,7 @@ server <- function(input, output, session) {
       end   <- gsub(x = input$dateRange[2], pattern = "-", replacement = "")
 
       data <- download_crypto_data_byName(
-             cpu   = 3, 
+             cpu   = 2, 
              start = start, 
              end   = end,
              names = input$select.coins)

@@ -135,6 +135,7 @@ retrival_coin_info <- function(range=1:200) {
 ###################################################
 download_crypto_data_byName <- function(cpu=1, names, 
                                         start, end, 
+                                        decimal.numbers=6, 
                                         query.EURexchange=FALSE) {
    
    # Variable symbol need to be from the 
@@ -199,10 +200,10 @@ download_crypto_data_byName <- function(cpu=1, names,
          volume = as.numeric(gsub(",|-", "", volume)), 
          market = as.numeric(gsub(",|-", "", market)), 
          date = mdy(date), 
-         open = as.numeric(open) %>% round(., 2), 
-         close = as.numeric(close) %>% round(., 2), 
-         high = as.numeric(high) %>% round(., 2),  
-         low = as.numeric(low) %>% round(., 2),  
+         open = as.numeric(open) %>% round(., decimal.numbers), 
+         close = as.numeric(close) %>% round(., decimal.numbers), 
+         high = as.numeric(high) %>% round(., decimal.numbers),  
+         low = as.numeric(low) %>% round(., decimal.numbers),  
          coin = as.factor(coin), 
          name = stringr::str_replace_all(coin, " *\\(.*?\\) *", replacement = "")  %>% str_trim(), 
          symbol = stringr::str_extract_all(coin, "^\\((.*)\\)") %>% 
@@ -220,6 +221,7 @@ download_crypto_data_byName <- function(cpu=1, names,
 
 # t <- download_crypto_data_byName(
 #    cpu = 3, start = 20170901, end = 20170905,
+#    decimal.numbers= 4, 
 #    names= c( "bitcoin", "ethereum",
 #              "bitcoin-cash",  "litecoin", "ripple") )
 
