@@ -204,12 +204,26 @@ download_crypto_data_byName <- function(cpu=1, names,
          high = as.numeric(high) %>% round(., 2),  
          low = as.numeric(low) %>% round(., 2),  
          coin = as.factor(coin), 
-         name = stringr::str_extract_all(coin, "^[^\\(]+") %>% str_trim(), 
-         symbol = stringr::str_extract_all(coin, "\\(([^()]+)\\)") %>% 
+         name = stringr::str_replace_all(coin, " *\\(.*?\\) *", replacement = "")  %>% str_trim(), 
+         symbol = stringr::str_extract_all(coin, "^\\((.*)\\)") %>% 
             gsub("\\(([^()]+)\\)", "\\1", x =. ) %>% 
             as.factor()
       ) 
    message("Mungging done!")
+   # Stop the amazing parallel processing power
+   stopCluster(cluster)
+   message("Cluster Stop")
+   print(proc.time() - ptm)
+   
+   return(marketdata)
+}
+
+# t <- download_crypto_data_byName(
+#    cpu = 3, start = 20170901, end = 20170905,
+#    names= c( "bitcoin", "ethereum",
+#              "bitcoin-cash",  "litecoin", "ripple") )
+
+basic_market_stats <- function(marketdata){
    ## Stats on the data
    if(query.EURexchange){ 
       message("Query EUR exchange...")
@@ -224,15 +238,13 @@ download_crypto_data_byName <- function(cpu=1, names,
          variance = ((eur_close - eur_open) / eur_close)
       )
    
-   # Stop the amazing parallel processing power
-   stopCluster(cluster)
-   message("Cluster Stop")
-   print(proc.time() - ptm)
-   
+   data %>% 
+      arrange(date) %>% 
+      group_by(coin) %>% 
+      mutate(
+         first_price = slice(), n()) 
+   top_n(x = data, n = 1, wt = date)
+   first(data)
    return(marketdata)
+   
 }
-
-# t <- download_crypto_data_byName(
-#    cpu = 3, start = 20170901, end = 20170905,
-#    names= c( "bitcoin", "ethereum",
-#              "bitcoin-cash",  "litecoin", "ripple") )
